@@ -7,6 +7,7 @@
 
 import UIKit
 
+// Протокол для реализации запросов
 protocol requestAPI {
     associatedtype Response
     
@@ -15,11 +16,13 @@ protocol requestAPI {
     func decode(data: Data) throws -> Response
 }
 
+// MARK: - Стартовый контроллер
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        // Отправляем запрос при старте приложения и выводим данные в консоль
         let infoRequest = PhotoInfoRequest(apiKey: "DEMO_KEY")
         parseJSON(request: infoRequest) { (result) in
             switch result {
@@ -48,7 +51,7 @@ class ViewController: UIViewController {
         task.resume()
     }
     
-    // Запрашиваемая информация
+    // Формируем необходимую для получения структуру
     struct PhotoInfo: Codable {
         var title: String
         var description: String
@@ -63,7 +66,7 @@ class ViewController: UIViewController {
         }
     }
     
-    // Готовим запрос
+    // Готовим запрос для отправки
     struct PhotoInfoRequest: requestAPI {
         typealias Response = PhotoInfo
         
@@ -80,6 +83,8 @@ class ViewController: UIViewController {
             return photoInfo
         }
     }
+    
+    
 
     
     
