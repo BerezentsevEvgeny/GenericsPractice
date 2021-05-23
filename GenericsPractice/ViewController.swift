@@ -68,7 +68,6 @@ class ViewController: UIViewController {
     
     // Готовим запрос для отправки
     struct PhotoInfoRequest: requestAPI {
-        typealias Response = PhotoInfo
         
         var apiKey: String
         
@@ -78,7 +77,7 @@ class ViewController: UIViewController {
             return URLRequest(url: urlComponents.url!)
         }
         
-        func decode(data: Data) throws -> Response {
+        func decode(data: Data) throws -> PhotoInfo {
             let photoInfo = try JSONDecoder().decode(PhotoInfo.self, from: data)
             return photoInfo
         }
